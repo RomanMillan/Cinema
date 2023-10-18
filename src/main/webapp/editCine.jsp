@@ -11,25 +11,34 @@
 <body>
 	<%
 		Cine c = null;
+		Cine cineUpdate = null;
 		try{
 			c = CineRepository.getCine(request.getParameter("cine"));
 			
-			Cine cineUpdate = new Cine(request.getParameter("cine"),request.getParameter("ciudadCine"),request.getParameter("direccionCine"));
+			if(request.getParameter("ciudadCine") != null){				
+				cineUpdate = new Cine(c.getCine(),request.getParameter("ciudadCine"),request.getParameter("direccionCine"));
+			}else{
+				cineUpdate = new Cine(c.getCine(),c.getCiudadCine(),c.getDireccionCine());
+			}
+			
 			CineRepository.annadirCine(cineUpdate);
+
 		}catch(Exception e){
 			
 		}
 	%>
+	
 
 	<form action="editCine.jsp">
 		<label>Nombre cine</label>
-		<input type="text" name="cine" value="<%=c.getCine() %>" readonly> <br>
+		<input type="text" name="cine" value="<%=cineUpdate.getCine() %>" readonly> <br>
 		<label>Ciudad</label>
-		<input type="text" name="ciudadCine" value="<%=c.getCiudadCine() %>"><br>
+		<input type="text" name="ciudadCine" value="<%=cineUpdate.getCiudadCine() %>"><br>
 		<label>Dirección</label>
-		<input type="text" name="direccionCine" value="<%=c.getDireccionCine() %>"> <br>
+		<input type="text" name="direccionCine" value="<%=cineUpdate.getDireccionCine() %>"> <br>
 		<button type="submit">Actualizar</button>
 	</form>
-
+	
+	
 </body>
 </html>

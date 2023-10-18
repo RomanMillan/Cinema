@@ -10,22 +10,18 @@
 		</head>
 	<body>
 		<%
-			/* ver si me ha puesto los datos para añadir un nuevo cine */
+			Cine c = null;
 			try{
-				Cine c = new Cine(request.getParameter("cine"),request.getParameter("ciudadCine"),request.getParameter("direccionCine"));
-				CineRepository.deleteCine(c);
+				c = CineRepository.getCine(request.getParameter("cine"));
 			}catch(Exception e){
-				/* Hay dos posibilidades: 
-					- Que no me haya pasado nada
-					- Que haya fallado al añadir
-				*/
+				
 			}
 		%>
 		
-		<form action="deleteCine.jsp">
-			<input type="text" name="cine">
-			<input type="text" name="ciudadCine">
-			<input type="text" name="direccionCine">
+		<form action="deleteCineDB.jsp">
+			<input type="text" name="cine" value="<%=c.getCine() %>"> <br>
+			<input type="text" name="ciudadCine" value="<%=c.getCiudadCine() %>"> <br>
+			<input type="text" name="direccionCine" value="<%=c.getDireccionCine() %>"> <br>
 			<button type="submit">borrar</button>
 		</form>
 		
